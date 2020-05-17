@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Save our cities together</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <link rel="icon"
+      type="image/png"
+      href="img/city-icon.png">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+        width: 100%
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .sidenav {
+        height: 100%;
+        width: 350px; /* originally 250 */ 
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+
+      .sidenav a {
+        padding: 8px 8px 8px 18px;
+        text-decoration: none;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .sansserif {
+        padding: 4px 4px 4px 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #818181;
+        font-size: 16px;
+      }
+
+      .sidenav a:hover {
+        color: #f1f1f1;
+      }
+
+      .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+
+      .Row
+      {
+          display: table;
+          width: 50%;
+          table-layout: fixed;
+          border-spacing: 10px;
+      }
+      .Column
+      {
+          display: table-cell;
+      }
+
+      @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 15px;}
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><b>&times;</b></a>
+      <p class="sansserif">We’re high school students from the Bay Area in California, who started helping small businesses around us with our families during this trying time by buying their gift cards, ordering take out, and continuing with online classes.</p> 
+      <p class="sansserif">An icon representing the service offered by a business will appear when a submission is processed. Our goal is to encourage consumer decisions in favor of small businesses by highlighting those businesses on our map. Please take a look around your area using the “your location” button in the bottom right, and take note of local businesses you can help.</p>
+      <p class="sansserif">If you notice that a business you want to support is not listed yet, submit their information below. (Submissions will update every hour)</p>
+      <a href="https://forms.gle/Ly3Zi1pnS4KcxKGu9" target="_blank">
+         <img border="0" src="img/submit-button.png" width="120" height="46"></a>
+      <a href="mailto:contact@savecity.us?subject=feedback">contact@savecity.us</a>
+
+      <a href="https://twitter.com/intent/tweet?text=Join%20me%20to%20save%20our%20cities.%20&url=http://savecity.us">
+              <img border="0" src="img/twitter-icon.png" width="30" height="30"></a>
+    </div>
+
+   <span style="position:absolute;z-index:1;font-size:30px;cursor:pointer" onclick="openNav()"> <b>&#9776;</b></span>
+   <script>
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "350px"; //originally 250
+        }
+
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+        }
+   </script>
+
+    <div id="map"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+      function addYourLocationButton (map)
+      {
+          var controlDiv = document.createElement('div');
+
+          var firstChild = document.createElement('button');
+          firstChild.style.backgroundColor = '#fff';
+          firstChild.style.border = 'none';
+          firstChild.style.outline = 'none';
+          firstChild.style.width = '28px';
+          firstChild.style.height = '28px';
+          firstChild.style.borderRadius = '2px';
+          firstChild.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+          firstChild.style.cursor = 'pointer';
+          firstChild.style.marginRight = '10px';
+          firstChild.style.padding = '0';
+          firstChild.title = 'Your Location';
+          controlDiv.appendChild(firstChild);
+
+          var secondChild = document.createElement('div');
+          secondChild.style.margin = '5px';
+          secondChild.style.width = '18px';
+          secondChild.style.height = '18px';
+          secondChild.style.backgroundImage = 'url(https://maps.gstatic.com/tactile/mylocation/mylocation-sprite-2x.png)';
+          secondChild.style.backgroundSize = '180px 18px';
+          secondChild.style.backgroundPosition = '0 0';
+          secondChild.style.backgroundRepeat = 'no-repeat';
+          firstChild.appendChild(secondChild);
+
+          google.maps.event.addListener(map, 'center_changed', function () {
+              secondChild.style['background-position'] = '0 0';
+          });
+
+          firstChild.addEventListener('click', function () {
+              var imgX = '0',
+                  animationInterval = setInterval(function () {
+                      imgX = imgX === '-18' ? '0' : '-18';
+                      secondChild.style['background-position'] = imgX+'px 0';
+                  }, 500);
+
+
+              if(navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(function(position) {
+                      var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                      map.setCenter(latlng);
+                      map.setZoom(13);
+                      clearInterval(animationInterval);
+                      secondChild.style['background-position'] = '-144px 0';
+                  });
+              } else {
+                  clearInterval(animationInterval);
+                  secondChild.style['background-position'] = '0 0';
+              }
+
+/*
+            var apiGeolocationSuccess = function(position) {
+            //    alert("API geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
+                var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                map.setCenter(latlng);
+                map.setZoom(12);
+                clearInterval(animationInterval);
+                secondChild.style['background-position'] = '-144px 0';
+
+            };
+
+          jQuery.post( "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDr3KtMz2MA7kI-Rk32J93Eoev45NRbBsw", function(success) {
+              apiGeolocationSuccess({coords: {latitude: success.location.lat, longitude: success.location.lng}});
+            }).fail(function(err) {
+              //  alert("API Geolocation error! \n\n"+err);
+            });
+*/
+          });
+
+          controlDiv.index = 1;
+          map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+      }
+
+      function initMap() {
+        var orig = {lat: 37.6605459, lng: -121.875536};
+
+        var myOptions = {
+                  zoom: 17,
+                  center: orig,
+                  mapTypeControlOptions: {
+                    mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID]
+                  }, // here´s the array of controls
+                  disableDefaultUI: true, // a way to quickly hide all controls
+                  mapTypeControl: false,
+                  scaleControl: true,
+                  zoomControl: false,
+                  zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.LARGE
+                  },
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+        // The map, centered at user initialLocation
+        var map = new google.maps.Map(
+            document.getElementById('map'), myOptions);
+            map.data.loadGeoJson("data.json");
+
+            var infowindow = new google.maps.InfoWindow();
+
+    /* Create a "listener" that will wait for the user to click an earthquake point,
+     * and then display the infowindow with details about that earthquake.
+     */
+          map.data.addListener('click', function(event) {
+            // in the geojson feature that was clicked, get the "place" and "mag" attributes
+            var name = event.feature.getProperty("name");
+            var address = event.feature.getProperty("address");
+            var website = event.feature.getProperty("website");
+            var action = event.feature.getProperty("action");
+            var html = '<b>'+ name + '</b><br>'+
+            '<a href="'+website+'" target="_blank">'+action+
+                '</a>';
+            infowindow.setContent(html); // show the html variable in the infowindow
+            infowindow.setPosition(event.feature.getGeometry().get()); // anchor the infowindow at the marker
+            infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)}); // move the infowindow up slightly to the top of the marker icon
+            infowindow.open(map);
+          });
+
+          // set marker icon
+          map.data.setStyle(function(feature) {
+            return {icon:feature.getProperty('icon')};
+          });
+
+          addYourLocationButton(map);
+
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDr3KtMz2MA7kI-Rk32J93Eoev45NRbBsw&callback=initMap"
+    async defer></script>
+  </body>
+</html>
