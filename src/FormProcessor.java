@@ -10,13 +10,16 @@ public class FormProcessor {
 
     public static void main(String[] args) throws Exception{
         FileWriter out = new FileWriter("data.json");
-        PrintWriter outDone = new PrintWriter(new FileWriter("ProcessedBusiness.txt"));
         BufferedReader inDone = new BufferedReader(new FileReader("ProcessedBusiness.txt"));
         ArrayList<String> doneBusinesses = new ArrayList<>();
         while(true) {
+            System.out.println("loop1");
             try {
-                StringTokenizer c = new StringTokenizer(inDone.readLine());
-                doneBusinesses.add(c.nextToken());
+                String check = inDone.readLine();
+                if(check.equals("")) {
+                    break;
+                }
+                doneBusinesses.add(check);
             } catch (Exception E) {
                 break;
             }
@@ -33,6 +36,7 @@ public class FormProcessor {
             StringTokenizer tokenizer = new StringTokenizer(f.nextLine(), ",");
             String time = tokenizer.nextToken();
             String name = tokenizer.nextToken();
+            System.out.println(name);
             String address = tokenizer.nextToken();
             address = address.replaceAll(" ", "+");
             address = address.replaceAll("#", "");
@@ -57,6 +61,7 @@ public class FormProcessor {
                 }
             }
             if(viable) {
+                System.out.println("called google" + name);
                 URL getCoords = new URL("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + ",+" + city + ",+" + state + "&key=AIzaSyA95JKIZi1nfDdRCpsBlDsdlTaBZ9Q-k7A");
                 HttpURLConnection conn2 = (HttpURLConnection) getCoords.openConnection();
                 conn2.setRequestMethod("GET");
@@ -77,6 +82,7 @@ public class FormProcessor {
                         break;
                     }
                 }
+                doneBusinesses.add(name + " " + zip + " " + "lat: " + lat + " " + "lng: " + lng);
             }else {
                 for(int i = 0; i < doneBusinesses.size(); i++) {
                     StringTokenizer l = new StringTokenizer(doneBusinesses.get(i));
@@ -131,10 +137,11 @@ public class FormProcessor {
                     featureCollection.put("features", features);
                 }
 
-            doneBusinesses.add(name + " " + zip + " " + "lat: " + lat + " " + "lng: " + lng);
+
         }
         out.write(featureCollection.toJSONString());
         out.close();
+        PrintWriter outDone = new PrintWriter(new FileOutputStream("ProcessedBusiness.txt", false));
         for(int i = 0; i < doneBusinesses.size(); i++) {
             outDone.println(doneBusinesses.get(i));
         }
