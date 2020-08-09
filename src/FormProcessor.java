@@ -5,7 +5,6 @@ import java.io.*;
 import netscape.javascript.*;
 import org.json.simple.*;
 import org.json.simple.JSONObject;
-
 public class FormProcessor {
 
     public static void main(String[] args) throws Exception{
@@ -13,7 +12,7 @@ public class FormProcessor {
         BufferedReader inDone = new BufferedReader(new FileReader("ProcessedBusiness.txt"));
         ArrayList<String> doneBusinesses = new ArrayList<>();
         while(true) {
-            System.out.println("loop1");
+//            System.out.println("loop1");
             try {
                 String check = inDone.readLine();
                 if(check.equals("")) {
