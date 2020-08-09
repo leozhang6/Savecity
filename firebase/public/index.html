@@ -38,12 +38,12 @@
       }
 
       .sidenav a {
-        padding: 8px 8px 8px 18px;
+        padding: 4px 4px 4px 4px;
         text-decoration: none;
         font-family: Arial, Helvetica, sans-serif;
-        font-size: 16px;
-        color: #818181;
-        display: block;
+        font-size: 18px;
+        color: #7AAFCF;
+ /*       display: block;*/
         transition: 0.3s;
       }
 
@@ -51,7 +51,13 @@
         padding: 4px 4px 4px 20px;
         font-family: Arial, Helvetica, sans-serif;
         color: #818181;
-        font-size: 16px;
+        font-size: 18px;
+      }
+      .sansserif1 {
+        padding: 4px 4px 4px 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #D3D3D3;
+        font-size: 24px;
       }
 
       .sidenav a:hover {
@@ -83,20 +89,109 @@
         .sidenav a {font-size: 15px;}
       }
     </style>
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+
+        /* The Modal (background) */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+          color: #545454;
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+          color: #aaaaaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+    </style>
   </head>
   <body>
 
     <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><b>&times;</b></a>
-      <p class="sansserif">We’re high school students from the Bay Area in California, who started helping small businesses around us with our families during this trying time by buying their gift cards, ordering take out, and continuing with online classes.</p>
-      <p class="sansserif">An icon representing the service offered by a business will appear when a submission is processed. Our goal is to encourage consumers to support small businesses by highlighting those businesses on our map. Please take a look around your area using the “your location” button in the bottom right, and take note of local businesses you can help.</p>
-      <p class="sansserif">If you notice that a business you want to support is not listed yet, submit their information below. (Submissions will update every hour)</p>
-      <a href="https://forms.gle/Ly3Zi1pnS4KcxKGu9" target="_blank">
-         <img border="0" src="img/submit-button.png" width="120" height="46"></a>
-      <a href="mailto:contact@savecity.us?subject=feedback">contact@savecity.us</a>
+      <a href="javascript:void(0)" class="closebtn" style="color: #818181" onclick="closeNav()"><b>&times;</b></a>
+      <p class="sansserif1">Welcome to Savecity!</p>
+      <p class="sansserif">Savecity is a project that documents how local businesses respond to COVID-19, and provides ways to help them. <br> <br> Support local businesses highlighted on this website by clicking each icon.</p>
+      <p class="sansserif">Join us by submitting a business that needs support, writing and reading <a href="https://medium.com/tag/savecity/archive" target="_blank">medium</a> posts, and posting on <a href="https://www.instagram.com/savecityus/" target="_blank">instagram</a> using #savecityus.</p>
+      <p class="sansserif">(Submissions will update every hour)</p>
+      <p style="text-align:center;">
+	      <a href="https://forms.gle/Ly3Zi1pnS4KcxKGu9" target="_blank">
+	         <img border="0" src="img/submit-button.png" width="120" height="46"></a>
+	         <br>
+	         <br>
+  			 <a id="aboutLink">About</a> 
+  			 <br>
+  			 <br>
+	      <a href="mailto:contact@savecity.us?subject=feedback">contact@savecity.us</a>
+	      <div id="myModal" class="modal">
+      </p> 
 
-      <a href="https://twitter.com/intent/tweet?text=Join%20me%20to%20save%20our%20cities.%20&url=http://savecity.us">
-              <img border="0" src="img/twitter-icon.png" width="30" height="30"></a>
+      <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+                <p class="sansserif">We’re high school students from the Bay Area in California, who started helping small businesses around us with our families during this trying time by buying their gift cards, ordering take out, and continuing with online classes.</p>
+      			<p class="sansserif">An icon representing the service offered by a business will appear when a submission is processed. Our goal is to encourage consumers to support small businesses by highlighting those businesses on our map. Please take a look around your area using the “your location” button in the bottom right, and take note of local businesses you can help.</p>
+        </div>
+
+      </div>
+      <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("aboutLink");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+      </script>
+      
+
+<!--       <a href="https://twitter.com/intent/tweet?text=Join%20me%20to%20save%20our%20cities.%20&url=http://savecity.us">
+              <img border="0" src="img/twitter-icon.png" width="30" height="30"></a> -->
     </div>
 
    <span style="position:absolute;z-index:1;font-size:30px;cursor:pointer" onclick="openNav()"> <b>&#9776;</b></span>
