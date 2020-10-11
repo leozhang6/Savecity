@@ -9,134 +9,21 @@
     <link rel="icon"
       type="image/png"
       href="img/city-icon.png">
+    <link rel = "stylesheet" href = "savecity.css">
     <style>
+
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
         height: 100%;
         width: 100%
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      .sidenav {
-        height: 100%;
-        width: 310px; /* originally 250 */ 
-
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-      }
-
-      .sidenav a {
-        padding: 4px 4px 4px 4px;
-        text-decoration: none;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 18px;
-        color: #7AAFCF;
- /*       display: block;*/
-        transition: 0.3s;
-      }
-
-      .sansserif {
-        padding: 4px 4px 4px 20px;
-        font-family: Arial, Helvetica, sans-serif;
-        color: #818181;
-        font-size: 18px;
-      }
-      .sansserif1 {
-        padding: 4px 4px 4px 20px;
-        font-family: Arial, Helvetica, sans-serif;
-        color: #D3D3D3;
-        font-size: 24px;
-      }
-
-      .sidenav a:hover {
-        color: #f1f1f1;
-      }
-
-      .sidenav .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
-      }
-
-      .Row
-      {
-          display: table;
-          width: 50%;
-          table-layout: fixed;
-          border-spacing: 10px;
-      }
-      .Column
-      {
-          display: table-cell;
-      }
-
-      @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
-        .sidenav a {font-size: 15px;}
-      }
-    </style>
-    <style>
-        body {font-family: Arial, Helvetica, sans-serif;}
-
-        /* The Modal (background) */
-        .modal {
-          display: none; /* Hidden by default */
-          position: fixed; /* Stay in place */
-          z-index: 1; /* Sit on top */
-          padding-top: 100px; /* Location of the box */
-          left: 0;
-          top: 0;
-          width: 100%; /* Full width */
-          height: 100%; /* Full height */
-          overflow: auto; /* Enable scroll if needed */
-          background-color: rgb(0,0,0); /* Fallback color */
-          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-          color: #545454;
-          background-color: #fefefe;
-          margin: auto;
-          padding: 20px;
-          border: 1px solid #888;
-          width: 80%;
-        }
-
-        /* The Close Button */
-        .close {
-          color: #aaaaaa;
-          float: right;
-          font-size: 28px;
-          font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-          color: #000;
-          text-decoration: none;
-          cursor: pointer;
-        }
+      }       
     </style>
   </head>
   <body>
 
     <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" style="color: #818181" onclick="closeNav()"><b>&times;</b></a>
+      <a href="javascript:void(0)" class="closebtn"  onclick="closeNav()"><b>&times;</b></a>
       <p class="sansserif1">Welcome to Savecity!</p>
       <p class="sansserif">Savecity is a project that documents how local businesses respond to COVID-19, and provides ways to help them. <br> <br> Support local businesses highlighted on this website by clicking each icon.</p>
       <p class="sansserif">Join us by submitting a business that needs support, writing and reading <a href="https://medium.com/tag/savecity/archive" target="_blank">medium</a> posts, and posting on <a href="https://www.instagram.com/savecityus/" target="_blank">instagram</a> using #savecityus.</p>
@@ -155,7 +42,7 @@
 
       <!-- Modal content -->
         <div class="modal-content">
-          <span class="close">&times;</span>
+          <span class="closeModal">&times;</span>
                 <p class="sansserif">We’re high school students from the Bay Area in California, who started helping small businesses around us with our families during this trying time by buying their gift cards, ordering take out, and continuing with online classes.</p>
       			<p class="sansserif">An icon representing the service offered by a business will appear when a submission is processed. Our goal is to encourage consumers to support small businesses by highlighting those businesses on our map. Please take a look around your area using the “your location” button in the bottom right, and take note of local businesses you can help.</p>
         </div>
@@ -169,7 +56,7 @@
         var btn = document.getElementById("aboutLink");
 
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+        var span = document.getElementsByClassName("closeModal")[0];
 
         // When the user clicks the button, open the modal 
         btn.onclick = function() {
@@ -206,7 +93,6 @@
    </script>
 
     <div id="map"></div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
 
       function addYourLocationButton (map)
@@ -257,7 +143,7 @@
                       clearInterval(animationInterval);
                       secondChild.style['background-position'] = '-144px 0';
                   });
-              } else {
+              } else { 
                   clearInterval(animationInterval);
                   secondChild.style['background-position'] = '0 0';
               }
@@ -318,11 +204,63 @@
             var name = event.feature.getProperty("name");
             var address = event.feature.getProperty("address");
             var website = event.feature.getProperty("website");
-            var action = event.feature.getProperty("action");
+            var giftcard = event.feature.getProperty("giftcard");
+            var takeout = event.feature.getProperty("takeout");
+            var onlineService = event.feature.getProperty("onlineService");
+            var onsiteService = event.feature.getProperty("onsiteService");
+            var outdoorDining = event.feature.getProperty("outdoorDining");
+            var orderOnline = event.feature.getProperty("orderOnline");
+            var instagram = event.feature.getProperty("instagramLink");
             var html = '<b>'+ name + '</b><br>'+
-            '<a href="'+website+'" target="_blank">'+action+
-                '</a>';
-            infowindow.setContent(html); // show the html variable in the infowindow
+            '<a href="'+website+'" target="_blank">'+"visit website"+
+               '</a><br> ';
+
+
+            if(giftcard==="Yes") {
+              giftcard = "<img src = 'img/checkmark.png' style='width:17px;height:17px'> "
+            } else {
+              giftcard = "<img src = 'img/redcross.png' style='width:15px;height:15px'> "
+            }
+
+            if(takeout==="Yes") {
+              takeout = "<img src = 'img/checkmark.png' style='width:17px;height:17px'> "
+            } else {
+              takeout = "<img src = 'img/redcross.png' style='width:15px;height:15px'> "
+            }
+
+            if(onlineService==="Yes") {
+              onlineService = "<img src = 'img/checkmark.png' style='width:17px;height:17px'> "
+            } else {
+              onlineService = "<img src = 'img/redcross.png' style='width:15px;height:15px'> "
+            }
+
+            if(onsiteService==="Yes") {
+              onsiteService = "<img src = 'img/checkmark.png' style='width:17px;height:17px'> "
+            } else {
+              onsiteService = "<img src = 'img/redcross.png' style='width:15px;height:15px'> "
+            }
+
+            if(orderOnline==="Yes") {
+              orderOnline = "<img src = 'img/checkmark.png' style='width:17px;height:17px'> "
+            } else {
+              orderOnline = "<img src = 'img/redcross.png' style='width:15px;height:15px'> "
+            }
+
+            if(outdoorDining==="Yes") {
+              outdoorDining = "<img src = 'img/checkmark.png' style='width:17px;height:17px'> "
+            } else {
+              outdoorDining = "<img src = 'img/redcross.png' style='width:15px;height:15px'> "
+            }
+
+
+            html = html + "<p>" + "Giftcard:" + " " + giftcard +  " " + "Online Service:" + " " +onlineService + "</p>"
+            			+ "<p>" + "Onsite service: " + onsiteService  + "  Takeout: " + takeout + "</p>"
+            			+ "<p>" + "Outdoor dining: " + outdoorDining  + " Order online: " + orderOnline + "</p>";
+              
+            if(instagram.includes("instagram")) {
+              html = html + '<iframe id="instagramPost" src="' +instagram+'embed" width="400" height="350" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+            }
+            infowindow.setContent(html); // show the html variable in the infowindow 
             infowindow.setPosition(event.feature.getGeometry().get()); // anchor the infowindow at the marker
             infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)}); // move the infowindow up slightly to the top of the marker icon
             infowindow.open(map);

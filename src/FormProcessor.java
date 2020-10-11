@@ -44,11 +44,55 @@ public class FormProcessor {
             String zip = tokenizer.nextToken();
             String website = tokenizer.nextToken();
             String state = tokenizer.nextToken();
-            String type = tokenizer.nextToken();
+
+
+
+
+            String options = tokenizer.nextToken();
+            String giftCard = "No";
+            String onsiteService = "No";
+            String onlineService = "No";
+            String outdoorDining  = "No";
+            String orderGoodsOnline = "No";
+            String takeout = "No";
+            if(options.contains("Gift Cards")) {
+                giftCard = "Yes";
+            }
+            if(options.contains("Provide On-site Services")) {
+                onsiteService = "Yes";
+            }
+            if(options.contains("Provide Online Service (eg. Zoom classes)")) {
+                onlineService = "Yes";
+            }
+            if(options.contains("Online / Phone Takeout")) {
+                takeout = "Yes";
+            }
+            if(options.contains("Outdoor Dining")) {
+                outdoorDining = "Yes";
+            }
+            if(options.contains("Order Goods Online")) {
+                orderGoodsOnline = "Yes";
+            }
+
+
+            String instagramLink = "";
             String approvalStatus = "";
             try {
-                approvalStatus = tokenizer.nextToken();
+                instagramLink = tokenizer.nextToken();
             }catch (Exception E){
+            }
+            if(instagramLink.equals("Approved")) {
+                approvalStatus = "Approved";
+            }else if (instagramLink.equals("Rejected")) {
+                approvalStatus = "Rejected";
+            } else {
+                try {
+                    approvalStatus = tokenizer.nextToken();
+                }catch (Exception E){
+                    approvalStatus = "Approved";
+                }
+            }
+            if(approvalStatus.equals("")) {
                 approvalStatus = "Approved";
             }
             String lat = "0";
@@ -99,19 +143,6 @@ public class FormProcessor {
             }
                 String image;
                 String action;
-                if (type.equals("Purchase Gift Card")) {
-                    image = "img/giftcard.png";
-                    action = "Buy gift card";
-                } else if (type.equals("Take out order")) {
-                    image = "img/takeout.png";
-                    action = "Order take out";
-                } else if (type.equals("Register for online service (eg. Zoom classes)")) {
-                    image = "img/online.png";
-                    action = "Register for online service";
-                } else {
-                    image = "img/delivery.png";
-                    action = "Order online";
-                }
                 if (!approvalStatus.equals("Rejected")) {
                     JSONObject feature = new JSONObject();
                     feature.put("type", "Feature");
@@ -128,9 +159,13 @@ public class FormProcessor {
                     JSONObject properties = new JSONObject();
                     properties.put("name", name);
                     properties.put("website", website);
-                    properties.put("type", type);
-                    properties.put("icon", image);
-                    properties.put("action", action);
+                    properties.put("giftcard", giftCard);
+                    properties.put("onlineService", onlineService);
+                    properties.put("takeout", takeout);
+                    properties.put("outdoorDining", outdoorDining);
+                    properties.put("orderOnline", orderGoodsOnline);
+                    properties.put("onsiteService", onsiteService);
+                    properties.put("instagramLink", instagramLink);
                     feature.put("properties", properties);
                     features.add(feature);
                     featureCollection.put("features", features);
